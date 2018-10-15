@@ -4,8 +4,8 @@
 Library                SSHLibrary
 
 *** Variables ***
-${USERNAME}            root
-${PASSWORD}            redhat
+#${USERNAME}            root
+#${PASSWORD}            redhat
 
 
 **** Keywords ****
