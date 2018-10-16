@@ -8,6 +8,9 @@ import subprocess
 import sys
 import yaml
 
+# Refer to [http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#module-search-path]
+os.environ["PYTHONPATH"] = os.path.dirname(os.path.abspath(__file__))
+
 def get_env_files(path='env/', ignore_pattern=".", suffix=None):
     """
     return all the env files accroding to sepecified path
@@ -36,8 +39,8 @@ def load_env_files(files):
     try:
         for f in files:
             for key, val in yaml.load(file(f, 'r')).items():
-                os.environ["ENV_" + str(key).upper()] = str(val)
-                envs[key] = val
+                #os.environ["ENV_" + str(key).upper()] = str(val)
+                envs["ENV_" + str(key).upper()] = str(val)
     except Exception as e:
         print "[Error] Failed to open file or the yaml file contains 'list': [%s], %s" %(str(f), e.message)
     return envs
@@ -157,16 +160,7 @@ if __name__ == "__main__":
     if files is None:
         print "[Info] You need to run the test cases in robot root path."
         exit(-1)
-    # print files
-    # for f in files:
-    #     print os.path.join("\n", f)
     envs = load_env_files(files)
-    # for e in os.environ:
-    #     if e.startswith("ENV_"):
-    #         print e, os.environ[e]
-    # print "-----------\n"
-    # print envs
-    # print "-----------\n"
     if len(sys.argv) > 1:
         print run_test_cases(sys.argv[1], envs)
 

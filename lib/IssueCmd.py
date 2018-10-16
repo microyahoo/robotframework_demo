@@ -3,11 +3,12 @@
 # Copyright:   2018 (c) Liang Zheng (zhengliang@xsky.com)
 
 import os
+import sys
 from SSHLibrary import SSHLibrary
 
-#parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-#sys.path.insert(0, os.path.abspath(__file__))
-#sys.paht.insert(0, parentdir)
+# parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# sys.path.insert(0, os.path.abspath(__file__))
+# sys.path.insert(0, parentdir)
 
 HOST_USER= "root"
 HOST_PWD= "redhat"
@@ -44,5 +45,11 @@ if __name__ == "__main__":
     cmd = "xms-cli --user admin --password admin access-path list"
 
     issue_cmd_via_root(cmd, hostname)
+    print __file__
 
+    parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    sys.path.insert(0, os.path.abspath(__file__))
+    sys.path.insert(0, parentdir)
+    print parentdir
+    print sys.path
 

@@ -1,3 +1,5 @@
+# Copyright:   2018 (c) Liang Zheng (zhengliang@xsky.com)
+
 host_user :     root
 host_pwd :      redhat
 xms_cli_user:   admin

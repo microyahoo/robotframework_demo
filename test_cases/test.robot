@@ -8,8 +8,8 @@ Documentation          This example demonstrates executing a command on a remote
 ...                    teardown. This saves some time when executing several test cases.
 
 Library                SSHLibrary
-Library                ../lib/IssueCmd.py 
-Resource               ../resources/ssh.robot
+Library                lib/IssueCmd.py 
+Resource               resources/ssh.robot
 
 Suite Teardown         Close All Connections
 
