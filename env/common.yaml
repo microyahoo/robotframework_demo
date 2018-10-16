@@ -1,4 +1,4 @@
-HOST_USER : root
-HOST_PWD : redhat
-XMS_CLI_USER: admin
-XMS_CLI_PWD: admin
+host_user : root
+host_pwd : redhat
+xms_cli_user: admin
+xms_cli_pwd: admin

@@ -12,9 +12,9 @@ def get_env_files(path='env/', ignore_pattern=".", suffix=None):
     """
     return all the env files accroding to sepecified path
     """
-    if type(path) not in (str, unicode):
+    if type(path) not in (str, unicode) or not os.path.exists(path):
         print "[Error] The path is invalid"
-        return
+        return 
     file_list = []
     if os.path.isfile(path) and not path.startswith(ignore_pattern): 
         if suffix is None or suffix is not None and path.endswith(suffix):
@@ -25,6 +25,7 @@ def get_env_files(path='env/', ignore_pattern=".", suffix=None):
                 file_list.extend(get_env_files(os.path.join(path, s), 
                     ignore_pattern, suffix))
 
+    # print file_list
     return file_list
 
 def load_env_files(files):
@@ -153,6 +154,9 @@ if __name__ == "__main__":
     # files = get_env_files(path)
     #files = get_env_files(path, suffix="yaml")
     files = get_env_files(suffix="yaml")
+    if files is None:
+        print "[Info] You need to run the test cases in robot root path."
+        exit(-1)
     # print files
     # for f in files:
     #     print os.path.join("\n", f)
