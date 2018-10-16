@@ -4,8 +4,8 @@
 Library                SSHLibrary
 
 *** Variables ***
-#${HOST_USER}            root
-#${HOST_PWD}            redhat
+#${ENV_HOST_USER}            root
+#${ENV_HOST_PWD}            redhat
 
 
 **** Keywords ****

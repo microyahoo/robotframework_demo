@@ -2,6 +2,7 @@
 
 # Copyright:   2018 (c) Liang Zheng (zhengliang@xsky.com)
 
+import os
 from SSHLibrary import SSHLibrary
 
 HOST_USER= "root"
@@ -17,13 +18,18 @@ def issue_cmd_via_root(command, host, username=HOST_USER, pwd=HOST_PWD, timeout=
         sshLib.open_connection(host)
         sshLib.login(username, pwd)
     except SSHClientException:
-        print "Could not connect to %s", str(host)
-        #TODO setup the OUTPUT env
+        errmsg = "Could not connect to %s", str(host)
+        print errmsg
+        os.environ["OUTPUT"] = errmsg
         sshLib.close_connection()
         return ["", "", -1]
     ret = sshLib.execute_command(command, return_stdout=True, return_stderr=True, return_rc=True, sudo=sudo,  sudo_password=sudo_password) 
     print ret
     sshLib.close_connection()
+    if ret[2] == 0:
+        os.environ["OUTPUT"] = ret[0]
+    else:
+        os.environ["OUTPUT"] = ret[2]
     return ret
 
 def issue_cmd_via_clish():

@@ -25,7 +25,9 @@ Verify Access Path Output
     Log    %{ENV_SZ}
     Log    %{ENV_XMS_CLI_PWD}
     ${output}=         Issue Cmd Via Root    xms-cli --user %{ENV_XMS_CLI_USER} --password %{ENV_XMS_CLI_PWD} access-path list   host=${host}
+    Log    %{OUTPUT}
     Should Contain    ${output}[0]          access-path3
+    Should Contain    %{OUTPUT}             access-path3
 
 Verify Volume List Output
     [Documentation]     Test volume list output
