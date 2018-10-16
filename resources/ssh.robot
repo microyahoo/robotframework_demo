@@ -10,6 +10,6 @@ Library                SSHLibrary
 
 **** Keywords ****
 Open Connection And Log In
-    [Arguments]    ${host}    ${username}=${HOST_USER}    ${password}=${HOST_PWD} 
+    [Arguments]    ${host}    ${username}=%{ENV_HOST_USER}    ${password}=%{ENV_HOST_PWD} 
     Open Connection     ${host}
     Login               ${username}        ${password}
