@@ -9,7 +9,7 @@ PASSWORD = "redhat"
 
 def issue_cmd_via_root(command, host, username=USERNAME, pwd=PASSWORD, timeout=300, prompt='$ ', sudo=False,  sudo_password=None):
     """
-    The return value is ["standard output", "standard output", return_value]
+    The return value is ["standard output", "error output", return_value]
     """
     sshLib = SSHLibrary()
     try:

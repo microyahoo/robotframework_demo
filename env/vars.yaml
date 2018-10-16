@@ -1,2 +1,4 @@
-USERNAME : "root"
-PASSWORD : "redhat"
+USERNAME : root
+PASSWORD : redhat
+XMS_CLI_USER: admin
+XMS_CLI_PWD: admin

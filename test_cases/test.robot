@@ -20,11 +20,13 @@ ${host}                10.0.11.233
 Verify Access Path Output
     [Documentation]    Execute Command can be used to run commands on the remote machine.
     ...                The keyword returns the array of standard output, error output and return value.
-    ${output}=         Issue Cmd Via Root    xms-cli --user admin --password admin access-path list   host=${host}
+    Log    ${XMS_CLI_USER}
+    Log    ${XMS_CLI_PWD}
+    ${output}=         Issue Cmd Via Root    xms-cli --user ${XMS_CLI_USER} --password ${XMS_CLI_PWD} access-path list   host=${host}
     Should Contain    ${output}[0]          access-path3
 
 Verify Volume List Output
     [Documentation]     Test volume list output
     [Setup]             Open Connection And Log In    host=${host}
-    ${output}=          Execute Command    xms-cli --user admin --password admin block-volume list
+    ${output}=          Execute Command    xms-cli --user ${XMS_CLI_USER} --password ${XMS_CLI_PWD} block-volume list
     Should Contain      ${output}    testvolume
