@@ -4,12 +4,12 @@
 Library                SSHLibrary
 
 *** Variables ***
-#${USERNAME}            root
-#${PASSWORD}            redhat
+#${HOST_USER}            root
+#${HOST_PWD}            redhat
 
 
 **** Keywords ****
 Open Connection And Log In
-    [Arguments]    ${host}    ${username}=${USERNAME}    ${password}=${PASSWORD} 
+    [Arguments]    ${host}    ${username}=${HOST_USER}    ${password}=${HOST_PWD} 
     Open Connection     ${host}
     Login               ${username}        ${password}

@@ -4,10 +4,10 @@
 
 from SSHLibrary import SSHLibrary
 
-USERNAME = "root"
-PASSWORD = "redhat"
+HOST_USER= "root"
+HOST_PWD= "redhat"
 
-def issue_cmd_via_root(command, host, username=USERNAME, pwd=PASSWORD, timeout=300, prompt='$ ', sudo=False,  sudo_password=None):
+def issue_cmd_via_root(command, host, username=HOST_USER, pwd=HOST_PWD, timeout=300, prompt='$ ', sudo=False,  sudo_password=None):
     """
     The return value is ["standard output", "error output", return_value]
     """
