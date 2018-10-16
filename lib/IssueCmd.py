@@ -5,6 +5,10 @@
 import os
 from SSHLibrary import SSHLibrary
 
+#parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#sys.path.insert(0, os.path.abspath(__file__))
+#sys.paht.insert(0, parentdir)
+
 HOST_USER= "root"
 HOST_PWD= "redhat"
 
