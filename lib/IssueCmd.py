@@ -29,7 +29,7 @@ def issue_cmd_via_root(command, host, username=HOST_USER, pwd=HOST_PWD, timeout=
     if ret[2] == 0:
         os.environ["OUTPUT"] = ret[0]
     else:
-        os.environ["OUTPUT"] = ret[2]
+        os.environ["OUTPUT"] = ret[1]
     return ret
 
 def issue_cmd_via_clish():
