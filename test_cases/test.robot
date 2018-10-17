@@ -48,6 +48,7 @@ Verify Block Volume Output
     Log    %{OUTPUT}
     Should Contain    ${output}[0]          testvolume
     Should Contain    %{OUTPUT}             testvolume
+    Should Match Regexp     %{OUTPUT}       testvolume\\s+\\|\\s+\\d+.*pool1
 
 Verify Client Group Output
     [Documentation]    Execute Command can be used to run commands on the remote machine.

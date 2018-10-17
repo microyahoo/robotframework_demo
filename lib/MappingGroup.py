@@ -7,11 +7,11 @@ import os
 import sys
 import IssueCmd
 
-xms_cli_user = os.environ.get("ENV_XMS_CLI_USER", "admin")
-xms_cli_pwd = os.environ.get("ENV_XMS_CLI_PWD", "admin")
+XMS_CLI_USER = os.environ.get("ENV_XMS_CLI_USER", "admin")
+XMS_CLI_PWD = os.environ.get("ENV_XMS_CLI_PWD", "admin")
 
 def get_mapping_groups(host=None):
-    cmd = "xms-cli --user {user} --password {pwd} -f json mapping-group list".format(user=xms_cli_user, pwd=xms_cli_pwd)
+    cmd = "xms-cli --user {user} --password {pwd} -f json mapping-group list".format(user=XMS_CLI_USER, pwd=XMS_CLI_PWD)
     if host is not None:
         ret = IssueCmd.issue_cmd_via_root(cmd, host)
     else:
@@ -27,7 +27,7 @@ def get_mapping_group_id_via_access_path(access_path, host=None):
 
 
 def get_access_path_id(access_path, host=None):
-    cmd = "xms-cli --user " + xms_cli_user + " --password " + xms_cli_pwd + " -f '{{range .}}{{println .id}}{{end}}' access-path list -q name.raw:" + access_path
+    cmd = "xms-cli --user " + XMS_CLI_USER + " --password " + XMS_CLI_PWD + " -f '{{range .}}{{println .id}}{{end}}' access-path list -q name.raw:" + access_path
     if host is not None:
         ret = IssueCmd.issue_cmd_via_root(cmd, host)
     else:
