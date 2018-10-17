@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # Copyright:   2018 (c) Liang Zheng (zhengliang@xsky.com)
 
+import argparse
 import os
 import select
 import shlex
@@ -10,6 +11,22 @@ import yaml
 
 # Refer to [http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html#module-search-path]
 os.environ["PYTHONPATH"] = os.path.dirname(os.path.abspath(__file__))
+
+# TODO
+class TestRunner(object):
+    def __init__(self, argv):
+        self.argv = argv
+        self.opts = self.get_options()
+
+    def get_options(self):
+        parser = argparse.ArgumentParser(description="script for test runner")
+        subparsers = parser.add_subparsers(help="TestRunner Commands", dest="_level")
+
+        _robot_par = subprocess.add_parser("robot", help="robot file")
+
+        _robot_file_par = _robot_par.add_subparsers(dest="subcommand", help="sub command of robot")
+        _robot_file_par.add_argument("--file", metavar="file", required=True, help="robot file path")
+        return parser.parse_args(self.argv)
 
 def get_env_files(path='env/', ignore_pattern=".", suffix=None):
     """
@@ -28,7 +45,6 @@ def get_env_files(path='env/', ignore_pattern=".", suffix=None):
                 file_list.extend(get_env_files(os.path.join(path, s), 
                     ignore_pattern, suffix))
 
-    # print file_list
     return file_list
 
 def load_env_files(files):
@@ -150,6 +166,13 @@ def _read_from_pipes(rpipes, rfds, file_descriptor):
 
     return data
 
+# TODO
+def main(argv):
+    try:
+        runner = TestRunner(argv)
+    except Exception as e:
+        print e
+
 if __name__ == "__main__":
     #path = "/Users/xsky/robot_test"
     #path = "/Users/xsky/robot_test/robotframework_demo/env"
@@ -159,7 +182,7 @@ if __name__ == "__main__":
     files = get_env_files(suffix="yaml")
     if files is None:
         print "[Info] You need to run the test cases in robot root path."
-        exit(-1)
+        sys.exit(-1)
     envs = load_env_files(files)
     if len(sys.argv) > 1:
         print run_test_cases(sys.argv[1], envs)

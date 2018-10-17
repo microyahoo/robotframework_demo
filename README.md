@@ -24,3 +24,9 @@ You can execute the command of "Test_Runner.py test_cases/test.robot" to run tes
 └── test_cases
     └── test.robot
 ```
+## TODO
+1.	异常处理、日志输出
+2.	用户友好的使用接口
+3.	支持suite级别，或者多个robot files
+4.	Python多版本支持，跨平台？
+
