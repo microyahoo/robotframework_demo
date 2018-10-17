@@ -6,8 +6,8 @@ import os
 import sys
 from SSHLibrary import SSHLibrary
 
-HOST_USER= "root"
-HOST_PWD= "redhat"
+HOST_USER = os.environ.get("ENV_HOST_USER", "root")
+HOST_PWD = os.environ.get("ENV_HOST_PWD", "redhat")
 
 def issue_cmd_via_root(command, host, username=HOST_USER, pwd=HOST_PWD, timeout=300, prompt='$ ', sudo=False,  sudo_password=None):
     """
