@@ -40,6 +40,7 @@ You can execute the command of "Test_Runner.py test_cases/test.robot" to run tes
   * [Robot Framework Quick Start Guide][ref-4]
   * [SSHLibrary keywords][ref-5]
   * [virtualenv][ref-6]
+  * [virtualenv User Guide][ref-7]
 
 [ref-1]: http://robotframework.org
 [ref-2]: http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html
@@ -47,3 +48,4 @@ You can execute the command of "Test_Runner.py test_cases/test.robot" to run tes
 [ref-4]: https://github.com/robotframework/QuickStartGuide/blob/master/QuickStart.rst
 [ref-5]: http://robotframework.org/SSHLibrary/SSHLibrary.html
 [ref-6]: https://pypi.org/project/virtualenv/
+[ref-7]: https://virtualenv.pypa.io/en/stable/userguide/
