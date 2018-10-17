@@ -29,8 +29,29 @@ Verify Access Path Output
     Should Contain    ${output}[0]          access-path3
     Should Contain    %{OUTPUT}             access-path3
 
-Verify Volume List Output
+Verify Block Volume List Output
     [Documentation]     Test volume list output
     [Setup]             Open Connection And Log In    host=${host}
     ${output}=          Execute Command    xms-cli --user %{ENV_XMS_CLI_USER} --password %{ENV_XMS_CLI_PWD} block-volume list
     Should Contain      ${output}    testvolume
+
+Verify Block Volume Output
+    [Documentation]    Execute Command can be used to run commands on the remote machine.
+    ${output}=         Issue Cmd Via Root    xms-cli --user %{ENV_XMS_CLI_USER} --password %{ENV_XMS_CLI_PWD} block-volume list   host=${host}
+    Log    %{OUTPUT}
+    Should Contain    ${output}[0]          testvolume
+    Should Contain    %{OUTPUT}             testvolume
+
+Verify Client Group Output
+    [Documentation]    Execute Command can be used to run commands on the remote machine.
+    ${output}=         Issue Cmd Via Root    xms-cli --user %{ENV_XMS_CLI_USER} --password %{ENV_XMS_CLI_PWD} client-group list   host=${host}
+    Log    %{OUTPUT}
+    Should Contain    ${output}[0]          iscsi233
+    Should Contain    %{OUTPUT}             iscsi233
+
+Verify Mapping Group Output
+    [Documentation]    Execute Command can be used to run commands on the remote machine.
+    ${output}=         Issue Cmd Via Root    xms-cli --user %{ENV_XMS_CLI_USER} --password %{ENV_XMS_CLI_PWD} mapping-group list   host=${host}
+    Log    %{OUTPUT}
+    Should Contain    ${output}[0]          iscsi233
+    Should Contain    %{OUTPUT}             iscsi233
