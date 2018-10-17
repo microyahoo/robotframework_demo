@@ -25,7 +25,7 @@ def issue_cmd_via_root(command, host, username=HOST_USER, pwd=HOST_PWD, timeout=
         sshLib.close_connection()
         return ["", "", -1]
     ret = sshLib.execute_command(command, return_stdout=True, return_stderr=True, return_rc=True, sudo=sudo,  sudo_password=sudo_password) 
-    print ret
+    #print ret
     sshLib.close_connection()
     if ret[2] == 0:
         os.environ["OUTPUT"] = ret[0]

@@ -55,7 +55,7 @@ def load_env_files(files):
     try:
         for f in files:
             for key, val in yaml.load(file(f, 'r')).items():
-                #os.environ["ENV_" + str(key).upper()] = str(val)
+                # os.environ["ENV_" + str(key).upper()] = str(val)
                 envs["ENV_" + str(key).upper()] = str(val)
     except Exception as e:
         print "[Error] Failed to open file or the yaml file contains 'list': [%s], %s" %(str(f), e.message)

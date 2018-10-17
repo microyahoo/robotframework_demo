@@ -9,12 +9,14 @@ Documentation          This example demonstrates executing a command on a remote
 
 Library                SSHLibrary
 Library                lib/IssueCmd.py 
+Library                lib/MappingGroup.py 
 Resource               resources/ssh.robot
 
 Suite Teardown         Close All Connections
 
 *** Variables ***
 ${host}                10.0.11.233
+${accesspath}          access-path3 
 
 *** Test Cases ***
 Verify Access Path Output
@@ -34,6 +36,11 @@ Verify Block Volume List Output
     [Setup]             Open Connection And Log In    host=${host}
     ${output}=          Execute Command    xms-cli --user %{ENV_XMS_CLI_USER} --password %{ENV_XMS_CLI_PWD} block-volume list
     Should Contain      ${output}    testvolume
+
+Verify Access Path Id
+    [Documentation]     Test access path id
+    ${id}=      Get Access Path Id   access_path=${accesspath}    host=${host}
+    Should Be Equal As Integers     ${id}       6
 
 Verify Block Volume Output
     [Documentation]    Execute Command can be used to run commands on the remote machine.
