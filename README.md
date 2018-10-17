@@ -5,7 +5,8 @@ You can execute the command of "Test_Runner.py test_cases/test.robot" to run tes
 
 ```
 代码目录结构
-├── README.rst
+.
+├── README.md
 ├── Test_Runner.py
 ├── env
 │   ├── bj
@@ -15,7 +16,9 @@ You can execute the command of "Test_Runner.py test_cases/test.robot" to run tes
 │       └── sz.yaml
 ├── lib
 │   ├── IssueCmd.py
-│   └── IssueCmd.pyc
+│   ├── IssueCmd.pyc
+│   ├── MappingGroup.py
+│   └── MappingGroup.pyc
 ├── log.html
 ├── output.xml
 ├── report.html

@@ -20,6 +20,7 @@ def get_mapping_groups(host=None):
     if ret[2] != 0:
         print "[Error] Failed to get mapping groups information."
         return
+    # TODO handle exception
     return json.loads(ret[0])
 
 def get_mapping_group_id_via_access_path(access_path, host=None):
@@ -38,6 +39,7 @@ def get_access_path_id(access_path, host=None):
         return
     if ret[0] is None or len(ret[0]) == 0:
         return -1
+    # TODO handle exception
     return int(ret[0])
 
 
