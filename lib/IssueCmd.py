@@ -3,8 +3,11 @@
 # Copyright:   2018 (c) Liang Zheng (zhengliang@xsky.com)
 
 import os
+import socket
+import paramiko
 import sys
 from SSHLibrary import SSHLibrary
+from SSHLibrary.abstractclient import SSHClientException
 
 HOST_USER = os.environ.get("ENV_HOST_USER", "root")
 HOST_PWD = os.environ.get("ENV_HOST_PWD", "redhat")
@@ -18,14 +21,14 @@ def issue_cmd_via_root(command, host, username=HOST_USER, pwd=HOST_PWD, timeout=
         print "[INFO] Begin to open the connection of", str(host)
         sshLib.open_connection(host)
         sshLib.login(username, pwd)
-    except SSHClientException:
-        errmsg = "Could not connect to %s", str(host)
+    # http://docs.paramiko.org/en/1.15/api/client.html#paramiko.client.SSHClient.connect
+    except (SSHClientException, paramiko.SSHException, socket.error, socket.timeout) as se:
+        errmsg = "[Error] Failed to connect to {host}".format(host=str(host))
         print errmsg
         os.environ["OUTPUT"] = errmsg
         sshLib.close_connection()
         return ["", "", -1]
     ret = sshLib.execute_command(command, return_stdout=True, return_stderr=True, return_rc=True, sudo=sudo,  sudo_password=sudo_password) 
-    #print ret
     sshLib.close_connection()
     if ret[2] == 0:
         os.environ["OUTPUT"] = ret[0]
