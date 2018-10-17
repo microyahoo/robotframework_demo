@@ -24,7 +24,16 @@ def get_mapping_groups(host=None):
     return json.loads(ret[0])
 
 def get_mapping_group_id_via_access_path(access_path, host=None):
+    """
+    return a list of mapping group ids for specified access path
+    """
     mapping_groups = get_mapping_groups(host)
+    mp_list = mapping_groups["mapping_groups"]
+    ret = []
+    for mp in mp_list:
+        if mp["access_path"]["name"] == access_path:
+            ret.append(mp["id"])
+    return ret
 
 
 def get_access_path_id(access_path, host=None):
@@ -52,4 +61,5 @@ if __name__ == "__main__":
     print access_path_id
     access_path_id = get_access_path_id("access-path", hostname)
     print access_path_id
-    
+    mp_ids = get_mapping_group_id_via_access_path("access-path3", hostname)
+    print mp_ids

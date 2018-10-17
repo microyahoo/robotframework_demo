@@ -50,6 +50,11 @@ Verify Block Volume Output
     Should Contain    %{OUTPUT}             testvolume
     Should Match Regexp     %{OUTPUT}       testvolume\\s+\\|\\s+\\d+.*pool1
 
+Verify Mapping Group Ids
+    [Documentation]    Execute Command can be used to run commands on the remote machine.
+    ${ids}      Get Mapping Group Id Via Access Path        access_path=${accesspath}    host=${host}
+    Log     ${ids}
+
 Verify Client Group Output
     [Documentation]    Execute Command can be used to run commands on the remote machine.
     ${output}=         Issue Cmd Via Root    xms-cli --user %{ENV_XMS_CLI_USER} --password %{ENV_XMS_CLI_PWD} client-group list   host=${host}
