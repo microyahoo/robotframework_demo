@@ -41,6 +41,7 @@ You can execute the command of "Test_Runner.py test_cases/test.robot" to run tes
   * [SSHLibrary keywords][ref-5]
   * [virtualenv][ref-6]
   * [virtualenv User Guide][ref-7]
+  * [Paramiko Exceptions][ref-8]
 
 [ref-1]: http://robotframework.org
 [ref-2]: http://robotframework.org/robotframework/latest/RobotFrameworkUserGuide.html
@@ -49,3 +50,4 @@ You can execute the command of "Test_Runner.py test_cases/test.robot" to run tes
 [ref-5]: http://robotframework.org/SSHLibrary/SSHLibrary.html
 [ref-6]: https://pypi.org/project/virtualenv/
 [ref-7]: https://virtualenv.pypa.io/en/stable/userguide/
+[ref-8]: http://docs.paramiko.org/en/2.4/api/ssh_exception.html#
