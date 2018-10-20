@@ -4,7 +4,7 @@ Robot Framework Demo
 You can execute the command of "Test_Runner.py test_cases/test.robot" to run test cases.
 
 ```
-代码目录结构
+File Hierarchy
 .
 ├── README.md
 ├── Test_Runner.py
