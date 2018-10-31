@@ -15,7 +15,7 @@ XMS_REST_PORT = os.environ.get("ENV_XMS_REST_PORT", 8056)
 
 XMS_CLI_HEADER = "xms-cli --user {user} --password {pwd} ".format(user=XMS_CLI_USER, pwd=XMS_CLI_PWD)
 
-XMS_REST_BASE_URL = "http://{ip}:%s/v1/" % (os.environ.get("ENV_XMS_REST_PORT", 8056))
+XMS_REST_BASE_URL = "http://{ip}:%s/v1/" % (XMS_REST_PORT)
 XMS_CURL_POST_HEADER = "curl -H \"Content-Type:application/json\" -X POST --data \'{data}\' "
 XMS_CURL_GET_HEADER = "curl -H \"Content-Type:application/json\" -X GET "
 
