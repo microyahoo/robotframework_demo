@@ -18,7 +18,7 @@ def issue_cmd_via_root(command, host, username=HOST_USER, pwd=HOST_PWD, timeout=
     """
     sshLib = SSHLibrary()
     try:
-        print "[INFO] Begin to open the connection of", str(host)
+        # print "[INFO] Begin to open the connection of", str(host)
         sshLib.open_connection(host)
         sshLib.login(username, pwd)
     # http://docs.paramiko.org/en/1.15/api/client.html#paramiko.client.SSHClient.connect

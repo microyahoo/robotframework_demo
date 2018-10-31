@@ -2,10 +2,62 @@
 
 # Copyright:   2018 (c) Liang Zheng (zhengliang@xsky.com)
 
+import json
 import os
 import select
 import shlex
 import subprocess
+import IssueCmd
+
+XMS_CLI_USER = os.environ.get("ENV_XMS_CLI_USER", "admin")
+XMS_CLI_PWD = os.environ.get("ENV_XMS_CLI_PWD", "admin")
+XMS_REST_PORT = os.environ.get("ENV_XMS_REST_PORT", 8056)
+
+XMS_CLI_HEADER = "xms-cli --user {user} --password {pwd} ".format(user=XMS_CLI_USER, pwd=XMS_CLI_PWD)
+
+XMS_REST_BASE_URL = "http://{ip}:%d/v1/" % (os.environ.get("ENV_XMS_REST_PORT", 8056))
+XMS_CURL_POST_HEADER = "curl -H \"Content-Type:application/json\" -X POST --data \'{data}\' "
+XMS_CURL_GET_HEADER = "curl -H \"Content-Type:application/json\" -X GET "
+
+token_parameter = {
+    "auth": {
+        "identity": {
+            "password": {
+                "user": {
+                    "name": XMS_CLI_USER,
+                    "password": XMS_CLI_PWD
+                }
+            }
+        }
+    }
+}
+
+def get_access_token(host="localhost"):
+    retval = -1
+    url = XMS_REST_BASE_URL.format(ip=host) + "auth/tokens" 
+    curl_header = XMS_CURL_POST_HEADER.format(data=json.dumps(token_parameter))
+    cmd = curl_header + url
+    # print cmd
+    ret = execute_cmd_in_host(cmd, host)
+    if ret[2] == 0:
+        try:
+            return json.loads(ret[0])['token']['uuid']
+        except Exception as e:
+            print "[Error] The format of access token data is invalid. Error message: " + e.message
+    return retval
+
+def execute_cmd_in_host(cmd, host=None):
+    """
+    args:
+        cmd:  command
+        host: the command runs in specified host. The default value is None, which stands for in local.
+    """
+    if host:
+        ret = IssueCmd.issue_cmd_via_root(cmd, host)
+    else:
+        rc, stdout, stderr = run_command(cmd)
+        ret = [stdout, stderr, rc] 
+    return ret
 
 # the following code logic is taken from ansible source code
 def run_command(cmd, environ_update=None, cwd=None, umask=None):
@@ -103,3 +155,7 @@ def _read_from_pipes(rpipes, rfds, file_descriptor):
             rpipes.remove(file_descriptor)
 
     return data
+
+if __name__ == "__main__":
+    host = "10.0.11.233"
+    print get_access_token(host)
