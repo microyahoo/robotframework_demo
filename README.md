@@ -15,16 +15,22 @@ File Hierarchy
 │   └── sz
 │       └── sz.yaml
 ├── lib
+│   ├── AccessPath.py
+│   ├── Block.py
+│   ├── BlockVolume.py
+│   ├── ClientGroup.py
+│   ├── Host.py
 │   ├── IssueCmd.py
 │   ├── MappingGroup.py
+│   ├── Pool.py
+│   ├── Snapshot.py
+│   ├── TeardownBlock.py
 │   └── utils.py
-├── log.html
-├── output.xml
-├── report.html
 ├── resources
 │   └── ssh.robot
 └── test_cases
-    └── test.robot
+    ├── example.robot
+    └── test_block.robot
 ```
 ## TODO
 1.	异常处理、日志输出
