@@ -1,0 +1,29 @@
+@startuml
+
+actor User #red
+participant main.go as main
+participant "etcd/manager.go" as etcd_mgr
+
+User -> main: xmsd
+activate main #FFBBBB
+    main -> main: runServer()
+        activate main #DarkSalmon
+            main -> main: cmd.InitBeego()
+            main -> main: cmd.InitLogger()
+            main -> main: cmd.InitSysSignalManager()
+            main -> main: cmd.InitEtcd()
+            activate main #FFBBBB
+                main -> etcd_mgr: Init() 
+            deactivate main
+            main -> main: cmd.InitMetric()
+            main -> main: initFilters()
+            main -> main: initWorkEnv()
+            main -> main: initSearch()
+            main -> main: startRPCServer()
+            main -> main: runWebsocket()
+            main -> main: runCronJobs()
+            main -> main: beego.Run()
+        deactivate main
+deactivate main
+
+@enduml

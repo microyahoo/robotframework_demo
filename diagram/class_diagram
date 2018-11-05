@@ -1,0 +1,179 @@
+@startuml
+
+class beego.Controller {
+}
+
+class controllers.DemonController {
+	ctx          context.Context
+	dbSpan       opentracing.Span
+	model        *models.DemonModel
+	etm          *etcd.Manager
+	mgr          *manager.Manager
+	orm          orm.Ormer
+	metric       metrics.Manager
+
+    +Created(data interface{})
+    +EM() : *external.Manager
+    +ETM() : *etcd.Manager
+    +Finish()
+    +M() : *models.DemonModel
+    +Mgr() : *manager.Manager
+    +Prepare()
+    +UnmarshalJSONBody(v interface{}, keys ...string)
+    +Validate(sche string, document ...string)
+}
+
+class manager.Manager {
+	m      *models.DemonModel
+	em     *external.Manager
+	etm    *etcd.Manager
+	metric metrics.Manager
+
+    +EM() : *external.Manager
+    +ETM() : *etcd.Manager
+    +M() : *models.DemonModel
+    +Metric() : metrics.Manager
+}
+
+interface external.externalInterface {
+	init(em *Manager) error
+}
+
+interface external.CephInterface {
+   +ActivateOsd()
+   +AddBucket()
+   +AddCrush()
+   +AddFsDataPool()
+   ......
+}
+
+class external.cephExternal {
+	externalBase
+}
+note right: register ceph to Manager.
+
+class external.externalBase {
+	em *Manager
+   -init(em *Manager) : error
+   -run()
+   -runCmd()
+   -ssh()
+   -sshVirt()
+}
+
+class external.Manager {
+	ctx        context.Context
+	Lock       sync.Mutex
+	cmds       []*Command
+	Ceph       CephInterface
+	Disk       DiskInterface
+	Install    InstallInterface
+	Service    ServiceInterface
+	Net        NetInterface
+	OS         OSInterface
+	Rbd        RbdInterface
+	Rgw        RgwInterface
+	SSH        SSHInterface
+	Target     TargetInterface
+	License    LicenseInterface
+	Time       TimeInterface
+	Email      EmailInterface
+	HTTP       HTTPInterface
+	NFS        NFSInterface
+	Docker     DockerInterface
+	Auth       AuthInterface
+	Snmp       SnmpInterface
+	Virt       VirtInterface
+	Ipt        IptablesInterface
+	Keepalived KeepalivedInterface
+
+   ' -registerNewExternalFunc()
+
+    +Commands() : []*Command
+    +Context() : context.Context
+    +Init()
+    +ResetCommands()
+    +Rollback() : error
+    +SetContext(ctx context.Context)
+ 
+    -pushCommand(cmd *Command)
+}
+
+class etcd.Manager {
+	kapi client.KeysAPI
+	mapi client.MembersAPI
+
+	em *external.Manager
+
+	adminNetwork       string
+	adminIP            string
+	hostRole           string
+	primaryIP          string
+	candidateIPs       []string
+	masterDbIP         string
+	metricIP           string
+}
+
+class controllers.ClientController { 
+   +GetClient()
+   +ListClients()
+}
+
+class controllers.ClientGroupController {
+    +CreateClientGroup()
+    +DeleteClientGroup()
+    +GetClientGroup()
+    +ListClientGroups()
+    +UpdateClientGroup()
+
+    -checkStatus()
+}
+
+class search.Helper {
+	mgr *xmanager.Manager
+}
+
+interface beego.ControllerInterface {
+    Init()
+	Prepare()
+	Get()
+	Post()
+	Delete()
+	Put()
+	Head()
+	Patch()
+	Options()
+	Finish()
+	Render() error
+	XSRFToken() string
+	CheckXSRFCookie() bool
+	HandlerFunc(fn string) bool
+	URLMapping()
+}
+
+beego.ControllerInterface <|-- beego.Controller
+beego.Controller <|-- controllers.DemonController
+
+search.Helper <|-- controllers.DemonController
+models.DemonModel *-- controllers.DemonController
+etcd.Manager *-- controllers.DemonController
+manager.Manager *-- controllers.DemonController
+metrics.Manager *-- controllers.DemonController
+orm.Ormer *-- controllers.DemonController
+controllers.DemonController <|-- controllers.ClientGroupController
+controllers.DemonController <|-- controllers.ClientController
+
+external.Manager <|-- etcd.Manager
+external.externalBase *-- external.cephExternal
+external.Manager *-- external.externalBase
+
+external.externalInterface <|-- external.CephInterface
+external.CephInterface <|-- external.cephExternal
+external.CephInterface *-- external.Manager
+
+'models.DemonModel *-- manager.Manager
+'etcd.Manager *-- manager.Manager
+'external.Manager *-- manager.Manager
+'metrics.Manager *-- manager.Manager
+
+@enduml
