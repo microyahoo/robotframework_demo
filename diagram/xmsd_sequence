@@ -83,6 +83,7 @@ activate main #FFBBBB
             deactivate main
             main -> main: initSearch()
             main -> main: startRPCServer()
+            note right: register agent server and admin server.
             main -> main: runWebsocket()
             main -> main: runCronJobs()
             main -> main: beego.Run()
