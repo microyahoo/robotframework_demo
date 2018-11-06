@@ -121,6 +121,23 @@ class etcd.Manager {
 	candidateIPs       []string
 	masterDbIP         string
 	metricIP           string
+	primaryKeyNotFound bool
+	roleChanged        bool
+
+   +AddMember(adminIP string) : *client.Member, error
+   +AdminIP() : string
+   +CandidateIPs() : []string
+   +EM() : *external.Manager
+   +IsAgent() : bool
+   +IsCandidate() : bool
+   +IsMasterDb() : bool
+   +IsPrimary() : bool
+   +KeepAlive(key, value string, ttl time.Duration) : context.CancelFunc
+   +KeepPrimary()
+   +ListCandidates() : []string, error
+   +ListHosts() : []string, error
+   +ListMemberMap() : map[string]string, error
+   +ListMembers() : []client.Member, error
 }
 
 class controllers.ClientController { 
@@ -164,25 +181,26 @@ beego.ControllerInterface <|-- beego.Controller
 beego.Controller <|-- controllers.DemonController
 
 search.Helper <|-- controllers.DemonController
-models.DemonModel *-- controllers.DemonController
-etcd.Manager *-- controllers.DemonController
-manager.Manager *-- controllers.DemonController
-metrics.Manager *-- controllers.DemonController
-orm.Ormer *-- controllers.DemonController
+models.DemonModel <-- controllers.DemonController
+etcd.Manager <-- controllers.DemonController
+manager.Manager <-- controllers.DemonController
+metrics.Manager o-- controllers.DemonController
+orm.Ormer o-- controllers.DemonController
+
 controllers.DemonController <|-- controllers.ClientGroupController
 controllers.DemonController <|-- controllers.ClientController
 
-external.Manager <|-- etcd.Manager
+external.Manager <-- etcd.Manager
 external.externalBase *-- external.cephExternal
-external.Manager *-- external.externalBase
+external.Manager <-- external.externalBase
 
 external.externalInterface <|-- external.CephInterface
 external.CephInterface <|-- external.cephExternal
 external.CephInterface *-- external.Manager
 
-'models.DemonModel *-- manager.Manager
-'etcd.Manager *-- manager.Manager
-'external.Manager *-- manager.Manager
-'metrics.Manager *-- manager.Manager
+'models.DemonModel <-- manager.Manager
+'etcd.Manager <-- manager.Manager
+'external.Manager <-- manager.Manager
+'metrics.Manager o-- manager.Manager
 
 @enduml
