@@ -156,7 +156,7 @@ class controllers.ClientGroupController {
 }
 
 class search.Helper {
-	mgr *xmanager.Manager
+	mgr *manager.Manager
 }
 
 interface beego.ControllerInterface {
@@ -175,6 +175,49 @@ interface beego.ControllerInterface {
 	CheckXSRFCookie() bool
 	HandlerFunc(fn string) bool
 	URLMapping()
+}
+
+interface metrics.Manager {
+   +DeleteCloudInstanceStat()
+   +DeleteClusterStat()
+   +DeleteDiskStat()
+   +DeleteFSFolderStat()
+   +DeleteHostStat()
+   +DeleteNFSGatewayStat()
+   +DeleteNetworkInterfaceStat()
+   +DeleteObjectStorageBucketStat()
+   +DeleteObjectStorageGatewayStat()
+   +DeleteObjectStorageUserStat()
+   +DeleteOsdStat()
+   +DeletePartitionStat()
+   +DeletePoolStat()
+   +DeleteS3LoadBalancerStat()
+   +DeleteVolumeStat()
+   +GetCloudInstanceStats()
+   +GetClusterStats()
+   +GetDiskStats()
+   +GetFSFolderStats()
+   +GetHostStats()
+   +GetNFSGatewayStats()
+   +GetNetworkInterfaceStats()
+   +GetObjectStorageBucketStats()
+   +GetObjectStorageGatewayStats()
+   +GetObjectStorageUserStats()
+   +GetOsdStats()
+   +GetPartitionStats()
+   +GetPoolStats()
+   +GetS3LoadBalancerStats()
+   +GetVolumeStats()
+   +Host()
+   +Init()
+}
+
+class metrics.prometheusManager {
+	sync.Mutex
+	host   string
+	client prometheus.Client
+	api    prometheus.QueryAPI
+	etm    *etcd.Manager
 }
 
 beego.ControllerInterface <|-- beego.Controller
@@ -202,5 +245,9 @@ external.CephInterface *-- external.Manager
 'etcd.Manager <-- manager.Manager
 'external.Manager <-- manager.Manager
 'metrics.Manager o-- manager.Manager
+manager.Manager <-- search.Helper
+
+metrics.Manager <|-- metrics.prometheusManager
+etcd.Manager <-- metrics.prometheusManager
 
 @enduml
