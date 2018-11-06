@@ -12,6 +12,7 @@ class controllers.DemonController {
 	orm          orm.Ormer
 	metric       metrics.Manager
 
+    +Accepted(data interface{})
     +Created(data interface{})
     +EM() : *external.Manager
     +ETM() : *etcd.Manager
@@ -33,6 +34,14 @@ class manager.Manager {
     +ETM() : *etcd.Manager
     +M() : *models.DemonModel
     +Metric() : metrics.Manager
+}
+
+class models.DemonModel {
+	orm          orm.Ormer
+	em           *external.Manager
+	etm          *etcd.Manager
+	host         *Host
+	PagingResult QueryParams
 }
 
 interface external.externalInterface {
