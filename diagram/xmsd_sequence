@@ -9,6 +9,7 @@ participant "etcd/watch.go" as watch
 participant "metrics/manager.go" as metr_mgr
 participant "self/init.go" as self_init
 participant "models/base.go" as models_base
+participant "cron/manager.go" as cron_mgr
 
 User -> main: xmsd
 activate main #FFBBBB
@@ -86,6 +87,10 @@ activate main #FFBBBB
             note right: register agent server and admin server.
             main -> main: runWebsocket()
             main -> main: runCronJobs()
+            activate cron_mgr #DarkSalmon
+                main -> cron_mgr: Init()
+                main -> cron_mgr: Start() &
+            deactivate cron_mgr
             main -> main: beego.Run()
         deactivate main
 deactivate main

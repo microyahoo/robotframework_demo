@@ -235,6 +235,12 @@ class cron.JobManager {
     +Init() : error
     +Start()
     +Stop()
+
+    -addCronJob(job Job, stop chan bool)
+    -checkRoles(job Job) : bool
+    -currentJobRoles() : []string
+    -jobNames() : []string
+    -registerJob(jobs ...Job)
 }
 
 interface cron.Job {
@@ -279,6 +285,32 @@ class cron.clientCodeJob {
     -run() : error
 }
 note right: register client code job to job Manager.
+
+class models.Host {
+   +ActionStatus : string
+   +AdminIP : string
+   +CPUModel : string
+   +ClockDiff : int64
+   +Cores : int
+   +DiskNum : uint64
+   +Enclosures : JSONTextField
+   +FcPorts : []*HostFcPort
+   +GatewayIPs : string
+   +ID : int64
+   +IsMasterDb : bool
+   +Model : string
+   +Name : string
+   +Os : string
+   +PlacementNode : *PlacementNode
+   +Primary : bool
+   +PrivateIP : string
+   +PublicIPs : string
+   +Rack : string
+   +Roles : string
+   +RootDisk : *Disk
+   +Status : string
+   +Type : string
+}
 
 beego.ControllerInterface <|-- beego.Controller
 beego.Controller <|-- controllers.DemonController
