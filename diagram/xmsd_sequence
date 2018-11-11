@@ -10,6 +10,8 @@ participant "metrics/manager.go" as metr_mgr
 participant "self/init.go" as self_init
 participant "models/base.go" as models_base
 participant "cron/manager.go" as cron_mgr
+participant "cron/base.go" as cron_base
+participant "cron.v2/cron.go" as v2_cron
 
 User -> main: xmsd
 activate main #FFBBBB
@@ -90,6 +92,11 @@ activate main #FFBBBB
             activate main #DarkSalmon
                 main -> cron_mgr: Init()
                 main -> cron_mgr: Start() &
+                activate cron_mgr #DarkSalmon
+                   cron_mgr -> cron_base: init() 
+                   cron_mgr -> cron_mgr: addCronJob()
+                   cron_mgr -> v2_cron: Start()
+                deactivate cron_mgr
             deactivate main
             main -> main: beego.Run()
         deactivate main

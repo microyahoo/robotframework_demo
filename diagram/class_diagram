@@ -78,29 +78,29 @@ class models.DemonModel {
 }
 
 interface external.externalInterface {
-    init(em *Manager) error
+    -init(em *Manager) error
 }
 
 interface external.CephInterface {
-   +ActivateOsd()
-   +AddBucket()
-   +AddCrush()
-   +AddFsDataPool()
-   ......
+    +ActivateOsd()
+    +AddBucket()
+    +AddCrush()
+    +AddFsDataPool()
+    ......
 }
 
 class external.cephExternal {
-    externalBase
+    +externalBase
 }
 note bottom: register ceph to external Manager.
 
 class external.externalBase {
-    em *Manager
-   -init(em *Manager) : error
-   -run()
-   -runCmd()
-   -ssh()
-   -sshVirt()
+    -em *Manager
+    -init(em *Manager) : error
+    -run()
+    -runCmd()
+    -ssh()
+    -sshVirt()
 }
 
 class external.Manager {
