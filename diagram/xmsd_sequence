@@ -87,10 +87,10 @@ activate main #FFBBBB
             note right: register agent server and admin server.
             main -> main: runWebsocket()
             main -> main: runCronJobs()
-            activate cron_mgr #DarkSalmon
+            activate main #DarkSalmon
                 main -> cron_mgr: Init()
                 main -> cron_mgr: Start() &
-            deactivate cron_mgr
+            deactivate main
             main -> main: beego.Run()
         deactivate main
 deactivate main
