@@ -4,18 +4,18 @@ class beego.Controller {
 }
 
 class controllers.DemonController {
-	+beego.Controller
-	+search.Helper
+    +beego.Controller
+    +search.Helper
 
-	-ctx          context.Context
-	-dbSpan       opentracing.Span
-	-model        *models.DemonModel
-	-etm          *etcd.Manager
-	-mgr          *manager.Manager
-	-orm          orm.Ormer
-	-metric       metrics.Manager
-	-host         *models.Host
-	-actionLog    *models.ActionLog
+    -ctx          context.Context
+    -dbSpan       opentracing.Span
+    -model        *models.DemonModel
+    -etm          *etcd.Manager
+    -mgr          *manager.Manager
+    -orm          orm.Ormer
+    -metric       metrics.Manager
+    -host         *models.Host
+    -actionLog    *models.ActionLog
 
     +Accepted(data interface{})
     +Created(data interface{})
@@ -30,10 +30,10 @@ class controllers.DemonController {
 }
 
 class manager.Manager {
-	m      *models.DemonModel
-	em     *external.Manager
-	etm    *etcd.Manager
-	metric metrics.Manager
+    -m      *models.DemonModel
+    -em     *external.Manager
+    -etm    *etcd.Manager
+    -metric metrics.Manager
 
     +EM() : *external.Manager
     +ETM() : *etcd.Manager
@@ -42,12 +42,12 @@ class manager.Manager {
 }
 
 class models.DemonModel {
-	+PagingResult QueryParams
+    +PagingResult QueryParams
 
-	-orm          orm.Ormer
-	-em           *external.Manager
-	-etm          *etcd.Manager
-	-host         *Host
+    -orm          orm.Ormer
+    -em           *external.Manager
+    -etm          *etcd.Manager
+    -host         *Host
 
     +Begin() : error
     +BeginTx(ctx context.Context, opts *sql.TxOptions)
@@ -78,7 +78,7 @@ class models.DemonModel {
 }
 
 interface external.externalInterface {
-	init(em *Manager) error
+    init(em *Manager) error
 }
 
 interface external.CephInterface {
@@ -90,12 +90,12 @@ interface external.CephInterface {
 }
 
 class external.cephExternal {
-	externalBase
+    externalBase
 }
 note bottom: register ceph to external Manager.
 
 class external.externalBase {
-	em *Manager
+    em *Manager
    -init(em *Manager) : error
    -run()
    -runCmd()
@@ -104,30 +104,31 @@ class external.externalBase {
 }
 
 class external.Manager {
-	ctx        context.Context
-	Lock       sync.Mutex
-	cmds       []*Command
-	Ceph       CephInterface
-	Disk       DiskInterface
-	Install    InstallInterface
-	Service    ServiceInterface
-	Net        NetInterface
-	OS         OSInterface
-	Rbd        RbdInterface
-	Rgw        RgwInterface
-	SSH        SSHInterface
-	Target     TargetInterface
-	License    LicenseInterface
-	Time       TimeInterface
-	Email      EmailInterface
-	HTTP       HTTPInterface
-	NFS        NFSInterface
-	Docker     DockerInterface
-	Auth       AuthInterface
-	Snmp       SnmpInterface
-	Virt       VirtInterface
-	Ipt        IptablesInterface
-	Keepalived KeepalivedInterface
+    ctx        context.Context
+    Lock       sync.Mutex
+    cmds       []*Command
+
+    +Ceph       CephInterface
+    +Disk       DiskInterface
+    +Install    InstallInterface
+    +Service    ServiceInterface
+    +Net        NetInterface
+    +OS         OSInterface
+    +Rbd        RbdInterface
+    +Rgw        RgwInterface
+    +SSH        SSHInterface
+    +Target     TargetInterface
+    +License    LicenseInterface
+    +Time       TimeInterface
+    +Email      EmailInterface
+    +HTTP       HTTPInterface
+    +NFS        NFSInterface
+    +Docker     DockerInterface
+    +Auth       AuthInterface
+    +Snmp       SnmpInterface
+    +Virt       VirtInterface
+    +Ipt        IptablesInterface
+    +Keepalived KeepalivedInterface
 
    ' -registerNewExternalFunc()
 
@@ -142,35 +143,35 @@ class external.Manager {
 }
 
 class etcd.Manager {
-	kapi client.KeysAPI
-	mapi client.MembersAPI
+    -kapi client.KeysAPI
+    -mapi client.MembersAPI
 
-	em *external.Manager
+    -em *external.Manager
 
-	adminNetwork       string
-	adminIP            string
-	hostRole           string
-	primaryIP          string
-	candidateIPs       []string
-	masterDbIP         string
-	metricIP           string
-	primaryKeyNotFound bool
-	roleChanged        bool
+    -adminNetwork       string
+    -adminIP            string
+    -hostRole           string
+    -primaryIP          string
+    -candidateIPs       []string
+    -masterDbIP         string
+    -metricIP           string
+    -primaryKeyNotFound bool
+    -roleChanged        bool
 
-   +AddMember(adminIP string) : *client.Member, error
-   +AdminIP() : string
-   +CandidateIPs() : []string
-   +EM() : *external.Manager
-   +IsAgent() : bool
-   +IsCandidate() : bool
-   +IsMasterDb() : bool
-   +IsPrimary() : bool
-   +KeepAlive(key, value string, ttl time.Duration)
-   +KeepPrimary()
-   +ListCandidates() : []string, error
-   +ListHosts() : []string, error
-   +ListMemberMap() : map[string]string, error
-   +ListMembers() : []client.Member, error
+    +AddMember(adminIP string) : *client.Member, error
+    +AdminIP() : string
+    +CandidateIPs() : []string
+    +EM() : *external.Manager
+    +IsAgent() : bool
+    +IsCandidate() : bool
+    +IsMasterDb() : bool
+    +IsPrimary() : bool
+    +KeepAlive(key, value string, ttl time.Duration)
+    +KeepPrimary()
+    +ListCandidates() : []string, error
+    +ListHosts() : []string, error
+    +ListMemberMap() : map[string]string, error
+    +ListMembers() : []client.Member, error
 }
 
 class controllers.ClientController { 
@@ -179,7 +180,7 @@ class controllers.ClientController {
 }
 
 class controllers.baseAccessPathController {
-	DemonController
+    DemonController
 
     -checkActionStatus()
     -checkClientGroupStatus()
@@ -222,25 +223,25 @@ class controllers.ClientGroupController {
 }
 
 class search.Helper {
-	mgr *manager.Manager
+    mgr *manager.Manager
 }
 
 interface beego.ControllerInterface {
-    Init()
-	Prepare()
-	Get()
-	Post()
-	Delete()
-	Put()
-	Head()
-	Patch()
-	Options()
-	Finish()
-	Render() error
-	XSRFToken() string
-	CheckXSRFCookie() bool
-	HandlerFunc(fn string) bool
-	URLMapping()
+    +Init()
+    +Prepare()
+    +Get()
+    +Post()
+    +Delete()
+    +Put()
+    +Head()
+    +Patch()
+    +Options()
+    +Finish()
+    +Render() error
+    +XSRFToken() string
+    +CheckXSRFCookie() bool
+    +HandlerFunc(fn string) bool
+    +URLMapping()
 }
 
 interface metrics.Manager {
@@ -279,24 +280,24 @@ interface metrics.Manager {
 }
 
 class metrics.prometheusManager {
-	sync.Mutex
-	host   string
-	client prometheus.Client
-	api    prometheus.QueryAPI
-	etm    *etcd.Manager
+    +sync.Mutex
+    -host   string
+    -client prometheus.Client
+    -api    prometheus.QueryAPI
+    -etm    *etcd.Manager
 }
 
 class cron.JobManager {
-	-mode           string
-	-lock           sync.Mutex
-	-m              *models.DemonModel
-	-em             *external.Manager
-	-etm            *etcd.Manager
-	-o              orm.Ormer
-	-registeredJobs map[string]Job
-	-c              *cron.Cron
-	-stop           chan bool
-	-host           *models.Host
+    -mode           string
+    -lock           sync.Mutex
+    -m              *models.DemonModel
+    -em             *external.Manager
+    -etm            *etcd.Manager
+    -o              orm.Ormer
+    -registeredJobs map[string]Job
+    -c              *cron.Cron
+    -stop           chan bool
+    -host           *models.Host
 
     +Init() : error
     +Start()
@@ -325,26 +326,26 @@ interface cron.Job {
 }
 
 class cron.baseJob {
-	+search.Helper
+    +search.Helper
 
-	-ctx                  context.Context
-	-dbSpan               opentracing.Span
-	-m                    *models.DemonModel
-	-em                   *external.Manager
-	-etm                  *etcd.Manager
-	-mgr                  *manager.Manager
-	-metric               metrics.Manager
-	-o                    orm.Ormer
-	-jm                   *JobManager
-	-host                 *models.Host
-	-locker               etcd.Locker
-	-jobName              string
+    -ctx                  context.Context
+    -dbSpan               opentracing.Span
+    -m                    *models.DemonModel
+    -em                   *external.Manager
+    -etm                  *etcd.Manager
+    -mgr                  *manager.Manager
+    -metric               metrics.Manager
+    -o                    orm.Ormer
+    -jm                   *JobManager
+    -host                 *models.Host
+    -locker               etcd.Locker
+    -jobName              string
 
-	-newAgentClient rpc.NewAgentClientFunc
+    -newAgentClient rpc.NewAgentClientFunc
 }
 
 class cron.clientCodeJob {
-	+baseJob
+    +baseJob
 
     -addClientCodeByAt(ap *models.AccessPath) : error
     -cronExpression() : string
@@ -369,9 +370,9 @@ class cron.accessPathJob {
 }
 
 class cron.targetJob {
-	+baseJob
+    +baseJob
 
-	-apConfigMap map[int64]*accessPathConfig
+    -apConfigMap map[int64]*accessPathConfig
 
     -checkAPs()
     -checkClientLunMappings()
