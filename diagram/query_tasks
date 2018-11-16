@@ -4,3 +4,40 @@ demon=# select *from task where status='running';
  13814 | DeleteTarget | {"access_path":{"id":115},"action_log":{"id":2019},"force":false,"target":{"id":196}} |          | running |           |     0 |       1 | f         | 2018-11-14 06:19:29.14958+00  | 2018-11-14 06:19:29.149583+00 | 2018-11-14 06:19:32.568658+00 |        | 2018-11-14 06:19:32.568658+00 | f       |            |           | 2018-11-14 06:19:29.149551+00 |        0
  13813 | DeleteTarget | {"access_path":{"id":115},"action_log":{"id":2018},"force":false,"target":{"id":197}} |          | running |           |     0 |       1 | f         | 2018-11-14 06:19:28.943081+00 | 2018-11-14 06:19:28.943084+00 | 2018-11-14 06:19:32.552454+00 |        | 2018-11-14 06:19:32.552454+00 | f       |            |           | 2018-11-14 06:19:28.943051+00 |        0
 (2 rows)
+
+demon=# select *from mapping_group where access_path_id=113;
+ id | access_path_id | client_group_id | status |            create             |            update
+----+----------------+-----------------+--------+-------------------------------+-------------------------------
+ 72 |            113 |              62 | active | 2018-11-14 11:09:17.806595+00 | 2018-11-14 11:09:24.944334+00
+ 73 |            113 |              61 | active | 2018-11-14 11:09:43.759786+00 | 2018-11-14 11:09:49.229014+00
+(2 rows)
+
+demon=# select *from target where access_path_id=113;
+ id  | host_id | board | port |                    iqn                    | access_path_id | status |            create             |            update
+-----+---------+-------+------+-------------------------------------------+----------------+--------+-------------------------------+-------------------------------
+ 192 |       1 |     0 | 3260 | iqn.2018-10.node-233.113:1140dfe1a88014f5 |            113 | active | 2018-10-31 08:35:01.606738+00 | 2018-10-31 08:35:04.047158+00
+ 193 |       2 |     1 | 3260 | iqn.2018-10.node-234.113:185a6dd1389b9860 |            113 | active | 2018-10-31 08:35:08.365004+00 | 2018-10-31 08:35:13.919392+00
+(2 rows)
+
+demon=# SELECT target_id, client_id, lun_id, status FROM client_lun_mapping WHERE target_id IN (192,193) ORDER BY target_id, client_id, lun_id;
+ target_id | client_id | lun_id | status
+-----------+-----------+--------+--------
+       192 |        85 |    196 | active
+       192 |        85 |    197 | active
+       192 |        86 |    196 | active
+       192 |        86 |    197 | active
+       192 |        87 |    196 | active
+       192 |        87 |    197 | active
+       193 |        85 |    196 | active
+       193 |        85 |    197 | active
+       193 |        86 |    196 | active
+       193 |        86 |    197 | active
+       193 |        87 |    196 | active
+       193 |        87 |    197 | active
+
+demon=# SELECT lun.id FROM lun JOIN mapping_group_volumes mpv ON lun.volume_id=mpv.volume_id WHERE mpv.mapping_group_id=72 ORDER BY lun.id;
+ id  
+-----
+ 196
+ 197
+(2 rows)
