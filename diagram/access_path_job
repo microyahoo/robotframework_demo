@@ -62,7 +62,13 @@ activate cap #FFBBBB
             cap -> cap: checkTarget(apConfig, apInfoMap) 
             activate cap #FFBBBB
                 cap -> mt: ListTargets(job.host.ID, ap.id)
-                
+                cap -> cap: checkDeleteXXXTarget(target, apInfo) if ap existed in xdc
+                cap -> et:  CreateAccessPath() if ap not existed in xdc
+                cap -> cap: checkCreateXXXTarget(target, apInfo) if ap not existed in xdc
+            deactivate cap
+            cap -> cap: iterate for job.apConfigMap
+            activate cap #FFBBBB
+                cap -> cap: updateResourceStatus()
             deactivate cap
         deactivate cap
     deactivate cap
