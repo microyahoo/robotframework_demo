@@ -35,7 +35,7 @@ def delete_block_snapshot(snapshot, host=None):
     print cmd
     ret = utils.execute_cmd_in_host(cmd, host)
     if ret[2] != 0:
-        print "[Error] Failed to create block snapshot. Error message: [{err}]".format(err=ret[1])
+        print "[Error] Failed to delete block snapshot. Error message: [{err}]".format(err=ret[1])
         retval = -1
     return retval
 
