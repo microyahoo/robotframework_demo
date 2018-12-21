@@ -137,7 +137,7 @@ def remove_block_volumes(host=None):
         print "[Error] Failed to get block volume info."
 
 if __name__ == "__main__":
-    host = "10.0.11.233"
+    host = "10.255.101.73"
     remove_access_path_volumes(host)
     # remove_access_path_client_groups(host)
     remove_mapping_groups(host)

@@ -2,6 +2,10 @@
 
 # Copyright:   2018 (c) Liang Zheng (zhengliang@xsky.com)
 
+import datetime
+import time
+import uuid
+import random
 import json
 import utils
 import BlockVolume
@@ -43,7 +47,7 @@ def get_block_snapshot_ids(host=None):
     retval = -1
     ss_list = []
     cmd = utils.XMS_CLI_HEADER + "-f json block-snapshot list"
-    print cmd
+    # print cmd
     ret = utils.execute_cmd_in_host(cmd, host)
     if ret[2] != 0:
         print "[Error] Failed to get snapshot info. Error message: [{err}]".format(err=ret[1])
@@ -80,9 +84,26 @@ def update_block_snapshot(snapshot, name=None, description=None, host=None):
     raise NotImplementedError("This function is not implemented.")
 
 if __name__ == "__main__":
-    host = "10.0.11.233"
+    # create 1000 snapshots
+    _, volume_ids = BlockVolume.get_block_volume_ids()
+    for i in range(1, 1001):
+        idx = random.randint(0, len(volume_ids))
+        print create_block_snapshot("snapshot-" + str(uuid.uuid1()), volume_ids[idx])
+
+    # run get_block_snapshot_ids x times
+    length  = 100
+    start = datetime.datetime.now()
+    print start
+    for i in range(length):
+        get_block_snapshot_ids()
+    end = datetime.datetime.now()
+    print end
+    print (end - start ).seconds / (length * 1.0)
+
+
+    #host = "10.0.11.233"
     # update_block_snapshot("xxx")
-    print create_block_snapshot("snapshot1", "volume1")
-    print create_block_snapshot("snapshot1", "volume1", host=host)
-    print delete_block_snapshot("snapshot1")
-    print delete_block_snapshot("snapshot1", host=host)
+    #print create_block_snapshot("snapshot1", "volume1")
+    #print create_block_snapshot("snapshot1", "volume1", host=host)
+    #print delete_block_snapshot("snapshot1")
+    #print delete_block_snapshot("snapshot1", host=host)

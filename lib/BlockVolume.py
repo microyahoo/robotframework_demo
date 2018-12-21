@@ -2,6 +2,7 @@
 
 # Copyright:   2018 (c) Liang Zheng (zhengliang@xsky.com)
 
+import random
 import json
 import utils
 import Pool
@@ -189,25 +190,32 @@ class BlockVolume(object):
         return "BlockVolume[id = {vid}, name = {vname}, client group nums = {cgn}, pool id = {pid}, pool name = {pn}, access path id = {apid}, access path name = {apname}]".format(vid=self._id, vname=self._name, cgn=self._client_group_num, pid=self._pool_id, pn=self._pool_name, apid=self._access_path_id, apname=self._access_path_name)
 
 if __name__ == "__main__":
+    pool_ids = Pool.get_pool_ids()
+    for i in range(1, 2001):
+        size = random.randint(100, 500)
+        pool_id = pool_ids[random.randint(0, len(pool_ids))]
+	#print i, size, pool_id
+        print create_block_volume("volume-" + str(i), pool_id, str(size) + "G")
 #    print get_block_volume_id("volumexxx")
 #    print get_block_volume_id("volume1")
-    host = "10.0.11.233"
+    # host = "10.0.11.233"
 #    print get_block_volume_id("volumexxx", host)
 #    print get_block_volume_id("volume1", host)
 #    print "-----------1------------\n"
 #    print delete_block_volume("xxx")
 #    print delete_block_volume("xxx", host)
 #    print delete_block_volume("volume1", host)
-    print "-----------2------------\n"
-    print create_block_volume("volume1", "pool1", "100G")
-    print create_block_volume("volume1", "pool1", "100G", host=host)
-    print create_block_volume("volume1", 5, "100G")
-    print create_block_volume("volume1", 5, "100G", host=host)
-    print Pool.get_pool_id("pool2")
-    print Pool.get_pool_id("pool2", host)
+    # print "-----------2------------\n"
+    #print create_block_volume("volume1", "pool1", "100G")
+    #print create_block_volume("volume1", "pool1", "100G", host=host)
+    #print create_block_volume("volume1", 5, "100G")
+    #print create_block_volume("volume1", 5, "100G", host=host)
+    #print Pool.get_pool_id("pool2")
+    #print Pool.get_pool_id("pool2", host)
+#
+    #print create_block_volume("volume4", "pool1", "104G", host=host)
+    #print create_block_volume("volume5", "pool2", "105G", host=host)
+    #print delete_block_volume("volume4", host)
+    #print delete_block_volume("volume5", host)
+    #print get_block_volume_ids(host)
 
-    print create_block_volume("volume4", "pool1", "104G", host=host)
-    print create_block_volume("volume5", "pool2", "105G", host=host)
-    print delete_block_volume("volume4", host)
-    print delete_block_volume("volume5", host)
-    print get_block_volume_ids(host)

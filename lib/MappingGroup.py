@@ -4,6 +4,7 @@
 
 import json
 import os
+import random
 import time
 import utils
 import AccessPath
@@ -49,7 +50,7 @@ def create_mapping_group(access_path, block_volumes, client_group, host=None):
     return retval
 
 def _handle_block_volumes(block_volumes, host=None):
-    print block_volumes
+    #print block_volumes
     retval = -1
     if type(block_volumes) not in (str, int, list):
         print "[Error] The block volume name {name} is not valid.".format(name=b)
@@ -239,7 +240,6 @@ def add_block_volume(mg_id, block_volumes, host=None):
             retval = 0
     return retval
 
-
 def remove_block_volume(mg_id, block_volumes, host=None):
     """
     This method is used to remove block volume from a mapping group.
@@ -270,7 +270,22 @@ class MappingGroup(object):
         pass
 
 if __name__ == "__main__":
-    hostname = "10.0.11.233"
+    _, volume_ids = BlockVolume.get_block_volume_ids()
+    _, client_group_ids = ClientGroup.get_client_group_ids()
+    volume_ids.sort()
+    client_group_ids.sort()
+    cgid_len = len(client_group_ids)
+    vid_len = len(volume_ids)
+
+    for i in range(0, cgid_len/2):
+        cgid = client_group_ids[i]
+        print create_mapping_group(1, volume_ids[:vid_len/2], cgid)
+
+    for i in range(cgid_len/2, cgid_len):
+        cgid = client_group_ids[i]
+        print create_mapping_group(2, volume_ids[vid_len/2:], cgid)
+
+    # hostname = "10.0.11.233"
     # ret = _get_mapping_groups(hostname)
     # print type(ret)
     # print ret
@@ -291,25 +306,27 @@ if __name__ == "__main__":
     # mg_ids = get_mapping_group_ids_via_access_path("access-path3")
     # print mg_ids
     print "-----------------------------------------"
+        
     # print create_mapping_group("access-path1", ["volume1", "volume2", "volume3"], "client_group1", hostname)
     # print create_mapping_group("access-path3", ["volume4", "volume5", "volume6", "volume7"], "client_group2", hostname)
     # print create_mapping_group("access-path2", ["volume8", "volume11", hostname)
     # print create_mapping_group("access-path5", ["volume9", "volume10", hostname)
-    print get_mapping_group_ids_via_access_path("access-path1", hostname)
-    print get_mapping_group_ids_via_access_path("access-path3", hostname)
-    ret, mgids = get_mapping_group_ids_via_access_path("access-path2", hostname)
-    if ret == 0:
-        for mgid in mgids:
-            print add_block_volume(mgid, "volume11", hostname)
-            time.sleep(15)
-            print remove_block_volume(mgid, "volume11", hostname)
 
-    print get_client_groups_via_access_path(host=hostname)
-    print get_client_groups_via_access_path("access-path1", host=hostname)
-    print "---------------------------2---------------------"
-    i, volumes = get_block_volume_list(11, host=hostname)
-    print i
-    if i == 0:
-        for v in volumes:
-            print v
-    print get_block_volume_ids_via_mapping_group(11, host=hostname)
+    #print get_mapping_group_ids_via_access_path("access-path1", hostname)
+    #print get_mapping_group_ids_via_access_path("access-path3", hostname)
+    #ret, mgids = get_mapping_group_ids_via_access_path("access-path2", hostname)
+    #if ret == 0:
+        #for mgid in mgids:
+            #print add_block_volume(mgid, "volume11", hostname)
+            #time.sleep(15)
+            #print remove_block_volume(mgid, "volume11", hostname)
+#
+    #print get_client_groups_via_access_path(host=hostname)
+    #print get_client_groups_via_access_path("access-path1", host=hostname)
+    #print "---------------------------2---------------------"
+    #i, volumes = get_block_volume_list(66, host=hostname)
+    #print i
+    #if i == 0:
+        #for v in volumes:
+            #print v
+    #print get_block_volume_ids_via_mapping_group(70, host=hostname)
